@@ -8,7 +8,7 @@ import tornado.ioloop
 import os.path
 
 from tornado.options import define,options
-define("port", default=8787, help="run on th given port", type=int)
+define("port", default=8987, help="run on th given port", type=int)
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
