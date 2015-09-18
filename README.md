@@ -19,7 +19,7 @@ npm install
 bower install
 ```
 
-# Environment
+# Enviroment
 
 install gulp
 ```
