@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>pluto</title>
+    <link rel="stylesheet" href="static/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="static/css.css"></head>
+<body>
+    <div class="site-wrapper">
+        <div class="site-wrapper-inner">
+            <div class="cover-container">
+                <div class="masthead clearfix">
+                    <div class="inner">
+                        <h3 class="masthead-brand">m3u8、rtmp、ts分析器</h3>
+                    </div>
+                </div>
+                <div class="inner cover">
+                    <form action="">
+                        <div class="from-group">
+                            <label class="control-label"></label>
+                            <div>
+                                <input class="form-control" name="m3u8" value="http://solutions.brightcove.com/jwhisenant/hls/apple/bipbop/bipbopall.m3u8"></div>
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            <button type="button" class="btn btn-primary-outline btn-lg btn-block" id="btn-submit">开始分析</button>
+                        </div>
+                    </form>
+                    <pre class="well" id="log"></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="static/bootstrap/js/bootstrap.js"></script>
+    <script src="static/js.js"></script>
+    <script>
+    $(function () {
+        var requesting = false;
+        var $btn = $('#btn-submit');
+        
+        $btn.on('click', function () {
+            $(this).addClass('disabled').text('分析中……');
+            $('#log').empty();
+            var m3u8 = $('input[name="m3u8"]').val();
+            
+            $.post('/m3u8', {
+                data: m3u8
+                }, function (data) {
+                $('#log').html(data.data);
+                $('.masthead').remove();
+                $btn.removeClass('disabled').text('分析完毕');
+                setTimeout(function() {
+                $btn.text('重新分析');
+                }, 2000);
+            });
+            return;
+        });
+    });
+    </script>
+</body>
+</html>

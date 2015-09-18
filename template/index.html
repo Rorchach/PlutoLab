@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>PlutoLab</title>
+    <meta name="description" content="贴吧冥王星实验室">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="static/dist/normalize.css" />
+    <link rel="stylesheet" href="static/lib/covervid/styles.css" />
+</head>
+
+<body>
+
+    <!-- Video Markup -->
+    <section class="masthead">
+        <video class="masthead-video" autoplay loop muted poster="static/lib/covervid/poster.jpg">
+            <source src="static/lib/covervid/dreamscapes.mp4" type="video/mp4">
+            <source src="static/lib/covervid/dreamscapes.webm" type="video/webm">
+        </video>
+        <div class="masthead-overlay"></div>
+        <div class="masthead-arrow"></div>
+        <h1>PlutoLab<span>冥王星实验室</span></h1>
+        <a class="masthead-video-credit" href="http://vimeo.com/82495711" target="_blank">
+            <span>Video: Dreamscapes</span>
+            <span>by Jonathan Besler</span>
+        </a>
+    </section>
+    <section class="content">
+        <div class="container">
+            <h2>什么是Pluto✨？</h2>
+            <p>
+                它代表了贴吧的先进生产力。
+            </p>
+            <h3>已汇聚小行星</h3>
+            <ol>
+                <li>
+                    视频直播实验室：<a href="http://tieba.pics">tieba.pics</a>
+                    <pre>html5直播技术</pre>
+                </li>
+                <li>
+                    视频对比分析器：<a href="http://tieba.pics:8787/diff">tieba.pics:8787/diff</a>
+                    <pre>仅支持safari</pre>
+                </li>
+                <li>
+                    在线ffmpeg分析器：<a href="http://tieba.pics:8787/ffmpeg">tieba.pics:8787/ffmpeg</a>
+                    <pre>待解决跨域问题</pre>
+                </li>
+                <li>
+                    video全部API：<a href="http://tieba.pics:8787/video">tieba.pics:8787/video</a>
+                    <pre>从W3C迁移</pre>
+                </li>
+            </ol>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            developed by <a href="http://nononono.cn">hooke</a>
+        </div>
+    </footer>
+
+    <script src="static/dist/jquery.min.js"></script>
+    <script src="static/lib/covervid/covervid.js"></script>
+    <script src="static/lib/covervid/scripts.js"></script>
+
+    <script type="text/javascript">
+            // $('.masthead-video').coverVid(1920, 1080);
+            coverVid(document.querySelector('.masthead-video'), 640, 360);
+    </script>
+
+</body>
+
+</html>
