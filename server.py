@@ -40,12 +40,17 @@ class FfmpegPostHandler(tornado.web.RequestHandler):
         data = {"no": 0, "data": result[1]}
         self.write(data)
 
+class FlowPlayerHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.render("flowplayer.html");
+
 handlers = [
         (r"/", MainHandler),
         (r"/video", VideoHandler),
         (r"/ffmpeg", FfmpegGetHandler),
         (r"/m3u8", FfmpegPostHandler),
         (r"/diff", DiffHandler),
+        (r"/flow", FlowPlayerHandler),
     ]
 
 settings = {

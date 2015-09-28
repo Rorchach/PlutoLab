@@ -1,0 +1,46 @@
+<!doctype html>
+
+<head>
+
+   <!-- player skin -->
+   <link rel="stylesheet" href="/static/lib/flowplayer/skin/functional.css">
+
+   <!-- site specific styling -->
+   <style>
+   body { font: 12px "Myriad Pro", "Lucida Grande", sans-serif; text-align: center; padding-top: 3%; }
+   .flowplayer { width: 80%; }
+   </style>
+
+   <!-- for video tag based installs flowplayer depends on jQuery 1.7.2+ -->
+   <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+
+   <!-- include flowplayer -->
+   <script src="/static/lib/flowplayer/flowplayer.min.js"></script>
+
+</head>
+
+<body>
+
+   <!-- the player -->
+   <div class="flowplayer" data-swf="/static/lib/flowplayer/flowplayer.swf">
+  <!--     <video>
+         <source type="video/webm" src="http://d1g7sccev8onz8.cloudfront.net/dvrcf/smil:87chu.smil/playlist.m3u8">
+         <source type="video/mp4" src="http://d1g7sccev8onz8.cloudfront.net/dvrcf/smil:87chu.smil/playlist.m3u8">
+      </video>
+ -->
+       <video autoplay>
+         <source type="application/x-mpegurl" src="http://tblivestream.baidu.com/live/e4d528960b59616e65c96a6edislb11ff.m3u8?room_id=5000009&sign=53ffd5c209677c46b67f1af4966b6c46&bduss=GkR9z4%2FROoOU1ItRIEUH4si0MWZyEE7qj%2FsrcYZAu9uXjPIwRzUZqnwTlffJ7aeLD0Teoed9cYWPmYzMsAv0VO9%2BxDjs2LjQ3A%2BX%2BAIxJWgHHgdcFF5c3HWwkvQFgCmaGDWFYl%2FLfiUVRTtP63pmWn9miSa1PD2112GV%2B%2BC3t6SAp9PVsTOsOQdaBwr%2BtPpnSL2Em0NYfTCzB4Ezk1ttW5AhBJBdu5jfXrGiNe3Q1rUAbTfuuKsIFCwy0AiMBawt">
+         <source type="video/webm"            src="http://tblivestream.baidu.com/live/e4d528960b59616e65c96a6edislb11ff.m3u8?room_id=5000009&sign=53ffd5c209677c46b67f1af4966b6c46&bduss=GkR9z4%2FROoOU1ItRIEUH4si0MWZyEE7qj%2FsrcYZAu9uXjPIwRzUZqnwTlffJ7aeLD0Teoed9cYWPmYzMsAv0VO9%2BxDjs2LjQ3A%2BX%2BAIxJWgHHgdcFF5c3HWwkvQFgCmaGDWFYl%2FLfiUVRTtP63pmWn9miSa1PD2112GV%2B%2BC3t6SAp9PVsTOsOQdaBwr%2BtPpnSL2Em0NYfTCzB4Ezk1ttW5AhBJBdu5jfXrGiNe3Q1rUAbTfuuKsIFCwy0AiMBawt">
+      <source type="video/mp4"             src="http://tblivestream.baidu.com/live/e4d528960b59616e65c96a6edislb11ff.m3u8?room_id=5000009&sign=53ffd5c209677c46b67f1af4966b6c46&bduss=GkR9z4%2FROoOU1ItRIEUH4si0MWZyEE7qj%2FsrcYZAu9uXjPIwRzUZqnwTlffJ7aeLD0Teoed9cYWPmYzMsAv0VO9%2BxDjs2LjQ3A%2BX%2BAIxJWgHHgdcFF5c3HWwkvQFgCmaGDWFYl%2FLfiUVRTtP63pmWn9miSa1PD2112GV%2B%2BC3t6SAp9PVsTOsOQdaBwr%2BtPpnSL2Em0NYfTCzB4Ezk1ttW5AhBJBdu5jfXrGiNe3Q1rUAbTfuuKsIFCwy0AiMBawt">
+      </video>
+
+   </div>
+   
+   <script>
+      flowplayer(function (api) {
+        api.on("load", function (e, api, video) {
+          $("#vinfo").text(api.engine.engineName + " engine playing " + video.type);
+        });
+      });
+   </script>
+</body>
