@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>easeljs</title>
+    <style>
+        #testCanvas {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="testCanvas"></canvas>
+    <script src="https://code.createjs.com/tweenjs-0.6.1.min.js"></script>
+    <script src="/static/project/easeljs/easeljs-0.8.1.min.js"></script>
+    <script src="/static/project/easeljs/movieclip-0.8.1.min.js"></script>
+    <script>
+        canvas = document.getElementById("testCanvas");
+        stage = new createjs.Stage(canvas);
+
+        width = stage.canvas.width;
+        width = stage.canvas.height;
+        
+        createjs.Ticker.addEventListener("tick", stage);
+
+        var mc = new createjs.MovieClip(null, 0, false, {start:0}); // mode, startPosition, loop, labels
+        stage.addChild(mc);
+
+        // var child1 = new createjs.Shape(
+        //     new createjs.Graphics().beginFill("#369369")
+        //         .drawCircle(30,30,30)
+        // );
+
+        var image = new createjs.Bitmap("/static/project/easeljs/ball.jpeg");
+
+        mc.timeline.addTween(
+            createjs.Tween.get(image)
+                // .to({y:0}).to({y: 100}, 10, createjs.Ease.linear)
+                .to({ x: 50 }, 10, createjs.Ease.getPowInOut(4))
+                .to({ alpha: 0, y: 175 }, 500, createjs.Ease.getPowInOut(2))
+                .to({ alpha: 0, y: 225 }, 100)
+                .to({ alpha: 1, y: 200 }, 500, createjs.Ease.getPowInOut(2))
+                .to({ x: 100 }, 800, createjs.Ease.getPowInOut(2))
+        );
+
+        mc.gotoAndPlay("start");
+    </script>
+</body>
+</html>

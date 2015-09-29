@@ -30,6 +30,10 @@ class PixiHandler(tornado.web.RequestHandler):
     def get(self):
         self.render("pixi.html")
 
+class EaseljsHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.render("easeljs.html")
+
 class FfmpegPostHandler(tornado.web.RequestHandler):
     def post(self):
         m3u8 = self.get_argument('data')
@@ -56,6 +60,7 @@ handlers = [
         (r"/diff", DiffHandler),
         (r"/flow", FlowPlayerHandler),
         (r"/pixi", PixiHandler),
+        (r"/easeljs", EaseljsHandler),
     ]
 
 settings = {

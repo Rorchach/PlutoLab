@@ -3,12 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <title>Pixi</title>
+    <style>
+        body {
+            padding: 0;
+        }
+    </style>
 </head>
 <body>
     <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="/static/project/pixi/pixi.js"></script>
     <script>
-        var renderer = new PIXI.WebGLRenderer(800, 600);
+        var renderer = new PIXI.WebGLRenderer(window.screen.width, window.screen.height, {
+            // transparent: true
+        });
+
+        renderer.backgroundColor = 0x369369;
+
+        window.renderer = renderer;
+
         document.body.appendChild(renderer.view);
         var stage = new PIXI.Container();
         var ball;
