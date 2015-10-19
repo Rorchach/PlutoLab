@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MediaElement Player</title>
+    <link href="http://cdn.bootcss.com/mediaelement/2.18.1/mediaelementplayer.min.css" rel="stylesheet">
+
+</head>
+<body>
+    <h2>MediaElement Player demo</h2>
+    
+      <video id="player" width="640" height="360">
+            <source type="application/x-mpegURL" src="http://tblivestream.baidu.com/live/6d5dcff7a25d5e4238e079465dc62948.m3u8?room_id=5000009&sign=c246ac306a18e9337c5def1bd260e245&bduss=7np4XEIX35c22oTGonK0bmHFSjcPD8ke%2FGgsUtgJz532jij0eLCswTq%2Bpr5ZIe%2B4brLGhnttCgUMbL8fP%2BNqzjzJ9fwR6BkQ4jBgGuYU0IHXlwLziVKKoGiKOt9hgAx%2Bfdk6xjQBsjKLyqa1bETtJBBHSlW10jcq%2FM1voEapDjR7I1UceXUfhkg5VKhSiBj0boYCdoqMBsMylZcOExtSTwpbaZTWpxVnGr6Yx4BCwUTkBie1RhGEVkjBdGCqxKBQ" />
+<!--             <object width="320" height="240" type="application/x-shockwave-flash" data="http://cdn.bootcss.com/mediaelement/2.18.1/flashmediaelement.swf">
+                <param name="movie" value="http://cdn.bootcss.com/mediaelement/2.18.1/flashmediaelement.swf" /> 
+                <param name="flashvars" value="controls=true&amp;poster=myvideo.jpg&amp;file=myvideo.mp4" />        
+                <img src="myvideo.jpg" width="320" height="240" title="No video playback capabilities" />
+            </object> -->
+      </video>
+
+    <script src="http://cdn.bootcss.com/jquery/3.0.0-alpha1/jquery.min.js"></script>
+    <script src="/static/lib/mediaelement-and-player.min.js"></script>
+    <script>
+        $('video').mediaelementplayer({
+            success: function(media, node, player) {
+                events = 'loadstart progress suspend abort error emptied stalled play pause loadedmetadata loadeddata waiting playing canplay canplaythrough seeking seeked timeupdate ended ratechange durationchange volumechange'.split(' ');
+
+                window.media = media;
+                
+                for (var i=0, il=events.length; i<il; i++) {
+                    
+                    var eventName = events[i];
+                    
+                    media.addEventListener(events[i], function(e) {
+                        console.log(e.type);
+                    });
+                    
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -34,6 +34,10 @@ class EaseljsHandler(tornado.web.RequestHandler):
     def get(self):
         self.render("easeljs.html")
 
+class MediaElementPlayerHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.render("mediaelement.html")
+
 class FfmpegPostHandler(tornado.web.RequestHandler):
     def post(self):
         m3u8 = self.get_argument('data')
@@ -61,6 +65,7 @@ handlers = [
         (r"/flow", FlowPlayerHandler),
         (r"/pixi", PixiHandler),
         (r"/easeljs", EaseljsHandler),
+        (r"/mediaelement", MediaElementPlayerHandler),
     ]
 
 settings = {
@@ -77,6 +82,6 @@ if __name__ == "__main__":
     app = make_app()
     app.listen(options.port)
     
-    print 'Development server is running at http://127.0.0.1:%s/' % options.port
+    print 'Development server is running at http://0.0.0.0:%s/' % options.port
     print 'Quit the server with Control-C'
     tornado.ioloop.IOLoop.current().start()
