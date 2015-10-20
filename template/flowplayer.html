@@ -16,7 +16,6 @@
 
    <!-- include flowplayer -->
    <script src="/static/lib/flowplayer/flowplayer.min.js"></script>
-
 </head>
 
 <body>
@@ -24,10 +23,11 @@
    <!-- the player -->
    <div class="flowplayer no-background" data-swf="/static/lib/flowplayer/flowplayer.swf">
       <video>
-            <source type="application/x-mpegurl" src="http://123.56.120.86:8526/live/livestream.m3u8">
+            <!-- <source type="application/x-mpegurl" src="http://123.56.120.86:8526/live/livestream.m3u8"> -->
+            <!-- <source type="application/x-mpegurl" src="http://tblivestream.baidu.com/live/6d5dcff7a25d5e4238e079465dc62948.m3u8?room_id=5000009&sign=c246ac306a18e9337c5def1bd260e245&bduss=7np4XEIX35c22oTGonK0bmHFSjcPD8ke%2FGgsUtgJz532jij0eLCswTq%2Bpr5ZIe%2B4brLGhnttCgUMbL8fP%2BNqzjzJ9fwR6BkQ4jBgGuYU0IHXlwLziVKKoGiKOt9hgAx%2Bfdk6xjQBsjKLyqa1bETtJBBHSlW10jcq%2FM1voEapDjR7I1UceXUfhkg5VKhSiBj0boYCdoqMBsMylZcOExtSTwpbaZTWpxVnGr6Yx4BCwUTkBie1RhGEVkjBdGCqxKBQ"> -->
+            <source type="application/x-mpegurl" src="http://inx-con001.inqb8r.tv/live/e4/playlist.m3u8">
       </video>
-   </div>
-   
+   </div>   
    <script>
       flowplayer(function (api) {
         api.on("load", function (e, api, video) {

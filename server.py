@@ -38,6 +38,11 @@ class MediaElementPlayerHandler(tornado.web.RequestHandler):
     def get(self):
         self.render("mediaelement.html")
 
+class me2Handler(tornado.web.RequestHandler):
+    def get(self):
+        self.render("me2.html")
+        
+
 class FfmpegPostHandler(tornado.web.RequestHandler):
     def post(self):
         m3u8 = self.get_argument('data')
@@ -66,6 +71,7 @@ handlers = [
         (r"/pixi", PixiHandler),
         (r"/easeljs", EaseljsHandler),
         (r"/mediaelement", MediaElementPlayerHandler),
+        (r"/me2", me2Handler),
     ]
 
 settings = {

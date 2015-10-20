@@ -3,40 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <title>MediaElement Player</title>
-    <link href="http://cdn.bootcss.com/mediaelement/2.18.1/mediaelementplayer.min.css" rel="stylesheet">
-
+    <link href="/static/project/me/mediaelementplayer.css" rel="stylesheet">
 </head>
 <body>
     <h2>MediaElement Player demo</h2>
     
       <video id="player" width="640" height="360">
-            <source type="application/x-mpegURL" src="http://tblivestream.baidu.com/live/6d5dcff7a25d5e4238e079465dc62948.m3u8?room_id=5000009&sign=c246ac306a18e9337c5def1bd260e245&bduss=7np4XEIX35c22oTGonK0bmHFSjcPD8ke%2FGgsUtgJz532jij0eLCswTq%2Bpr5ZIe%2B4brLGhnttCgUMbL8fP%2BNqzjzJ9fwR6BkQ4jBgGuYU0IHXlwLziVKKoGiKOt9hgAx%2Bfdk6xjQBsjKLyqa1bETtJBBHSlW10jcq%2FM1voEapDjR7I1UceXUfhkg5VKhSiBj0boYCdoqMBsMylZcOExtSTwpbaZTWpxVnGr6Yx4BCwUTkBie1RhGEVkjBdGCqxKBQ" />
-<!--             <object width="320" height="240" type="application/x-shockwave-flash" data="http://cdn.bootcss.com/mediaelement/2.18.1/flashmediaelement.swf">
-                <param name="movie" value="http://cdn.bootcss.com/mediaelement/2.18.1/flashmediaelement.swf" /> 
-                <param name="flashvars" value="controls=true&amp;poster=myvideo.jpg&amp;file=myvideo.mp4" />        
-                <img src="myvideo.jpg" width="320" height="240" title="No video playback capabilities" />
-            </object> -->
+            <source type="application/x-mpegURL" src="http://tblivestream.baidu.com/live/6d5dcff7a25d5e4238e079465dc62948.m3u8?room_id=5000009&sign=c246ac306a18e9337c5def1bd260e245&bduss=7np4XEIX35c22oTGonK0bmHFSjcPD8ke%2FGgsUtgJz532jij0eLCswTq%2Bpr5ZIe%2B4brLGhnttCgUMbL8fP%2BNqzjzJ9fwR6BkQ4jBgGuYU0IHXlwLziVKKoGiKOt9hgAx%2Bfdk6xjQBsjKLyqa1bETtJBBHSlW10jcq%2FM1voEapDjR7I1UceXUfhkg5VKhSiBj0boYCdoqMBsMylZcOExtSTwpbaZTWpxVnGr6Yx4BCwUTkBie1RhGEVkjBdGCqxKBQ"/>
+            <!-- <source type="application/x-mpegURL" src="http://streambox.fr/playlists/test_001/stream.m3u8"> -->
+            <!-- <source type="application/x-mpegurl" src="http://inx-con001.inqb8r.tv/live/e4/playlist.m3u8"> -->
       </video>
 
-    <script src="http://cdn.bootcss.com/jquery/1.7/jquery.min.js"></script>
-    <script src="/static/lib/mediaelement-and-player.min.js"></script>
+
+   <select>
+    <option value="http://tblivestream.baidu.com/live/6d5dcff7a25d5e4238e079465dc62948.m3u8?room_id=5000009&sign=c246ac306a18e9337c5def1bd260e245&bduss=7np4XEIX35c22oTGonK0bmHFSjcPD8ke%2FGgsUtgJz532jij0eLCswTq%2Bpr5ZIe%2B4brLGhnttCgUMbL8fP%2BNqzjzJ9fwR6BkQ4jBgGuYU0IHXlwLziVKKoGiKOt9hgAx%2Bfdk6xjQBsjKLyqa1bETtJBBHSlW10jcq%2FM1voEapDjR7I1UceXUfhkg5VKhSiBj0boYCdoqMBsMylZcOExtSTwpbaZTWpxVnGr6Yx4BCwUTkBie1RhGEVkjBdGCqxKBQ">正常</option>
+     <option value="http://tblivestream.baidu.com/live/6d5dcff7a25d5e4238e079465dc62948_256.m3u8?room_id=5000009&sign=c246ac306a18e9337c5def1bd260e245&bduss=7np4XEIX35c22oTGonK0bmHFSjcPD8ke%2FGgsUtgJz532jij0eLCswTq%2Bpr5ZIe%2B4brLGhnttCgUMbL8fP%2BNqzjzJ9fwR6BkQ4jBgGuYU0IHXlwLziVKKoGiKOt9hgAx%2Bfdk6xjQBsjKLyqa1bETtJBBHSlW10jcq%2FM1voEapDjR7I1UceXUfhkg5VKhSiBj0boYCdoqMBsMylZcOExtSTwpbaZTWpxVnGr6Yx4BCwUTkBie1RhGEVkjBdGCqxKBQ">低清</option>
+     <option value="http://tblivestream.baidu.com/live/6d5dcff7a25d5e4238e079465dc62948_580.m3u8?room_id=5000009&sign=c246ac306a18e9337c5def1bd260e245&bduss=7np4XEIX35c22oTGonK0bmHFSjcPD8ke%2FGgsUtgJz532jij0eLCswTq%2Bpr5ZIe%2B4brLGhnttCgUMbL8fP%2BNqzjzJ9fwR6BkQ4jBgGuYU0IHXlwLziVKKoGiKOt9hgAx%2Bfdk6xjQBsjKLyqa1bETtJBBHSlW10jcq%2FM1voEapDjR7I1UceXUfhkg5VKhSiBj0boYCdoqMBsMylZcOExtSTwpbaZTWpxVnGr6Yx4BCwUTkBie1RhGEVkjBdGCqxKBQ">标清</option>
+     <option value="http://tblivestream.baidu.com/live/6d5dcff7a25d5e4238e079465dc62948_910.m3u8?room_id=5000009&sign=c246ac306a18e9337c5def1bd260e245&bduss=7np4XEIX35c22oTGonK0bmHFSjcPD8ke%2FGgsUtgJz532jij0eLCswTq%2Bpr5ZIe%2B4brLGhnttCgUMbL8fP%2BNqzjzJ9fwR6BkQ4jBgGuYU0IHXlwLziVKKoGiKOt9hgAx%2Bfdk6xjQBsjKLyqa1bETtJBBHSlW10jcq%2FM1voEapDjR7I1UceXUfhkg5VKhSiBj0boYCdoqMBsMylZcOExtSTwpbaZTWpxVnGr6Yx4BCwUTkBie1RhGEVkjBdGCqxKBQ">普清</option>
+     <option value="http://tblivestream.baidu.com/live/6d5dcff7a25d5e4238e079465dc62948_1024.m3u8?room_id=5000009&sign=c246ac306a18e9337c5def1bd260e245&bduss=7np4XEIX35c22oTGonK0bmHFSjcPD8ke%2FGgsUtgJz532jij0eLCswTq%2Bpr5ZIe%2B4brLGhnttCgUMbL8fP%2BNqzjzJ9fwR6BkQ4jBgGuYU0IHXlwLziVKKoGiKOt9hgAx%2Bfdk6xjQBsjKLyqa1bETtJBBHSlW10jcq%2FM1voEapDjR7I1UceXUfhkg5VKhSiBj0boYCdoqMBsMylZcOExtSTwpbaZTWpxVnGr6Yx4BCwUTkBie1RhGEVkjBdGCqxKBQ">高清</option>
+   </select>
+
+
+    <script src="/static/lib/me/jquery.js"></script>
+    <script src="/static/lib/me/mediaelement-and-player.js"></script>
+    <script src="/static/project/me/mediaelement-pluto.js"></script>
     <script>
         $('video').mediaelementplayer({
+            features: ['playpause','tracks','volume','fullscreen', 'multibitrate'],
+            usePluginFullScreen: false,
+            videoVolume: 'horizontal',
             success: function(media, node, player) {
-                events = 'loadstart progress suspend abort error emptied stalled play pause loadedmetadata loadeddata waiting playing canplay canplaythrough seeking seeked timeupdate ended ratechange durationchange volumechange'.split(' ');
+                console.log('media', media);
+                console.log('node', node);
+                console.log('player', player);
+
+                events = 'loadstart progress suspend abort error emptied stalled play pause loadedmetadata loadeddata waiting playing canplay canplaythrough seeking seeked timeupdate ended ratechange durationchange volumechange buffering'.split(' ');
+                events = ['buffering'];
 
                 window.media = media;
-                
+                media = media;
+                media.setMuted(true);
+
                 for (var i=0, il=events.length; i<il; i++) {
-                    
                     var eventName = events[i];
                     
                     media.addEventListener(events[i], function(e) {
-                        console.log(e.type);
+                        console.log(e);
                     });
-                    
                 }
             }
+        });
+
+        $('select').on('change', function () {
+            console.log($(this).find('option:selected').val());
+            media.setSrc($(this).find('option:selected').val());
+            media.play();
         });
     </script>
 </body>
