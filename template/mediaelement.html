@@ -3,25 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <title>MediaElement Player</title>
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
     <link href="/static/project/me/mediaelementplayer.css" rel="stylesheet">
+    <link href="http://cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 <body>
-    <h2>MediaElement Player demo</h2>
-    
-      <video id="player" width="640" height="360">
+      <video id="player" width="640" height="360" poster="/static/project/me/poster.png">
             <source type="application/x-mpegURL" src="http://tblivestream.baidu.com/live/6d5dcff7a25d5e4238e079465dc62948.m3u8?room_id=5000009&sign=c246ac306a18e9337c5def1bd260e245&bduss=7np4XEIX35c22oTGonK0bmHFSjcPD8ke%2FGgsUtgJz532jij0eLCswTq%2Bpr5ZIe%2B4brLGhnttCgUMbL8fP%2BNqzjzJ9fwR6BkQ4jBgGuYU0IHXlwLziVKKoGiKOt9hgAx%2Bfdk6xjQBsjKLyqa1bETtJBBHSlW10jcq%2FM1voEapDjR7I1UceXUfhkg5VKhSiBj0boYCdoqMBsMylZcOExtSTwpbaZTWpxVnGr6Yx4BCwUTkBie1RhGEVkjBdGCqxKBQ"/>
             <!-- <source type="application/x-mpegURL" src="http://streambox.fr/playlists/test_001/stream.m3u8"> -->
             <!-- <source type="application/x-mpegurl" src="http://inx-con001.inqb8r.tv/live/e4/playlist.m3u8"> -->
       </video>
+        
+        <span id="click-play-time" class="label label-success">
+            ~
+        </span>
 
-
-   <select>
-    <option value="http://tblivestream.baidu.com/live/6d5dcff7a25d5e4238e079465dc62948.m3u8?room_id=5000009&sign=c246ac306a18e9337c5def1bd260e245&bduss=7np4XEIX35c22oTGonK0bmHFSjcPD8ke%2FGgsUtgJz532jij0eLCswTq%2Bpr5ZIe%2B4brLGhnttCgUMbL8fP%2BNqzjzJ9fwR6BkQ4jBgGuYU0IHXlwLziVKKoGiKOt9hgAx%2Bfdk6xjQBsjKLyqa1bETtJBBHSlW10jcq%2FM1voEapDjR7I1UceXUfhkg5VKhSiBj0boYCdoqMBsMylZcOExtSTwpbaZTWpxVnGr6Yx4BCwUTkBie1RhGEVkjBdGCqxKBQ">正常</option>
-     <option value="http://tblivestream.baidu.com/live/6d5dcff7a25d5e4238e079465dc62948_256.m3u8?room_id=5000009&sign=c246ac306a18e9337c5def1bd260e245&bduss=7np4XEIX35c22oTGonK0bmHFSjcPD8ke%2FGgsUtgJz532jij0eLCswTq%2Bpr5ZIe%2B4brLGhnttCgUMbL8fP%2BNqzjzJ9fwR6BkQ4jBgGuYU0IHXlwLziVKKoGiKOt9hgAx%2Bfdk6xjQBsjKLyqa1bETtJBBHSlW10jcq%2FM1voEapDjR7I1UceXUfhkg5VKhSiBj0boYCdoqMBsMylZcOExtSTwpbaZTWpxVnGr6Yx4BCwUTkBie1RhGEVkjBdGCqxKBQ">低清</option>
-     <option value="http://tblivestream.baidu.com/live/6d5dcff7a25d5e4238e079465dc62948_580.m3u8?room_id=5000009&sign=c246ac306a18e9337c5def1bd260e245&bduss=7np4XEIX35c22oTGonK0bmHFSjcPD8ke%2FGgsUtgJz532jij0eLCswTq%2Bpr5ZIe%2B4brLGhnttCgUMbL8fP%2BNqzjzJ9fwR6BkQ4jBgGuYU0IHXlwLziVKKoGiKOt9hgAx%2Bfdk6xjQBsjKLyqa1bETtJBBHSlW10jcq%2FM1voEapDjR7I1UceXUfhkg5VKhSiBj0boYCdoqMBsMylZcOExtSTwpbaZTWpxVnGr6Yx4BCwUTkBie1RhGEVkjBdGCqxKBQ">标清</option>
-     <option value="http://tblivestream.baidu.com/live/6d5dcff7a25d5e4238e079465dc62948_910.m3u8?room_id=5000009&sign=c246ac306a18e9337c5def1bd260e245&bduss=7np4XEIX35c22oTGonK0bmHFSjcPD8ke%2FGgsUtgJz532jij0eLCswTq%2Bpr5ZIe%2B4brLGhnttCgUMbL8fP%2BNqzjzJ9fwR6BkQ4jBgGuYU0IHXlwLziVKKoGiKOt9hgAx%2Bfdk6xjQBsjKLyqa1bETtJBBHSlW10jcq%2FM1voEapDjR7I1UceXUfhkg5VKhSiBj0boYCdoqMBsMylZcOExtSTwpbaZTWpxVnGr6Yx4BCwUTkBie1RhGEVkjBdGCqxKBQ">普清</option>
-     <option value="http://tblivestream.baidu.com/live/6d5dcff7a25d5e4238e079465dc62948_1024.m3u8?room_id=5000009&sign=c246ac306a18e9337c5def1bd260e245&bduss=7np4XEIX35c22oTGonK0bmHFSjcPD8ke%2FGgsUtgJz532jij0eLCswTq%2Bpr5ZIe%2B4brLGhnttCgUMbL8fP%2BNqzjzJ9fwR6BkQ4jBgGuYU0IHXlwLziVKKoGiKOt9hgAx%2Bfdk6xjQBsjKLyqa1bETtJBBHSlW10jcq%2FM1voEapDjR7I1UceXUfhkg5VKhSiBj0boYCdoqMBsMylZcOExtSTwpbaZTWpxVnGr6Yx4BCwUTkBie1RhGEVkjBdGCqxKBQ">高清</option>
-   </select>
+        <span id="buffering-count" class="label label-danger" title="卡顿">
+            0
+        </span>
 
 
     <script src="/static/lib/me/jquery.js"></script>
@@ -29,16 +28,16 @@
     <script src="/static/project/me/mediaelement-pluto.js"></script>
     <script>
         $('video').mediaelementplayer({
-            features: ['playpause','tracks','volume','fullscreen', 'multibitrate'],
+            features: [
+                'playpause','tracks','volume','fullscreen',
+                'multibitrate', 'plutoui', 'plutomonitor', 'plutostatus'
+            ],
             usePluginFullScreen: false,
+            enablePluginDebug: true,
             videoVolume: 'horizontal',
             success: function(media, node, player) {
-                console.log('media', media);
-                console.log('node', node);
-                console.log('player', player);
-
                 events = 'loadstart progress suspend abort error emptied stalled play pause loadedmetadata loadeddata waiting playing canplay canplaythrough seeking seeked timeupdate ended ratechange durationchange volumechange buffering'.split(' ');
-                events = ['buffering'];
+                // events = ['buffering', 'seeking', 'waiting'];
 
                 window.media = media;
                 media = media;
@@ -48,16 +47,10 @@
                     var eventName = events[i];
                     
                     media.addEventListener(events[i], function(e) {
-                        console.log(e);
+                        console.log(e.type);
                     });
                 }
             }
-        });
-
-        $('select').on('change', function () {
-            console.log($(this).find('option:selected').val());
-            media.setSrc($(this).find('option:selected').val());
-            media.play();
         });
     </script>
 </body>

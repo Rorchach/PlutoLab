@@ -152,6 +152,18 @@ ol li:nth-child(6):after {
 ol li:nth-child(7):after {
     content: '7';
 }
+ol li:nth-child(8):after {
+    content: '8';
+}
+ol li:nth-child(9):after {
+    content: '9';
+}
+ol li:nth-child(10):after {
+    content: '10';
+}
+ol li:nth-child(11):after {
+    content: '11';
+}
 
 code {
     font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;

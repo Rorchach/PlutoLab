@@ -70,5 +70,8 @@ var teststreams = [{
 },{
     file:'http://dev.movingbits.nl/playlist/testing/encrypted/index.m3u8?player_id=Testing123456789&public=true',
     title: 'one level - AES 128 - one key, no IV. movingbits.nl'
+},{
+    file: 'http://ooyalahd2-f.akamaihd.net/i/globalradio01_delivery@156521/master.m3u8',
+    title: '自适应码率'
 }
 ];

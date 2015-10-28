@@ -638,7 +638,9 @@ mejs.PluginMediaElement.prototype = {
 			if (this.pluginType == 'youtube' || this.pluginType == 'vimeo') {
 				this.pluginApi.playVideo();
 			} else {
+				console.time('playMedia');
 				this.pluginApi.playMedia();
+				console.timeEnd('playMedia');
 			}
 			this.paused = false;
 		}
@@ -3284,8 +3286,10 @@ if (typeof jQuery != 'undefined') {
 			this.setControlsSize();
 		},
 		play: function() {
+			console.time('play');
 			this.load();
 			this.media.play();
+			console.timeEnd('play');
 		},
 		pause: function() {
 			try {

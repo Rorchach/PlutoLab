@@ -42,6 +42,9 @@ class me2Handler(tornado.web.RequestHandler):
     def get(self):
         self.render("me2.html")
         
+class videojsHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.render("videojs.html")
 
 class FfmpegPostHandler(tornado.web.RequestHandler):
     def post(self):
@@ -61,6 +64,10 @@ class FlowPlayerHandler(tornado.web.RequestHandler):
     def get(self):
         self.render("flowplayer.html");
 
+class ResolutionHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.render("resolution.html");
+
 handlers = [
         (r"/", MainHandler),
         (r"/video", VideoHandler),
@@ -72,6 +79,8 @@ handlers = [
         (r"/easeljs", EaseljsHandler),
         (r"/mediaelement", MediaElementPlayerHandler),
         (r"/me2", me2Handler),
+        (r"/videojs", videojsHandler),
+        (r"/resolution", ResolutionHandler),
     ]
 
 settings = {

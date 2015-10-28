@@ -120,7 +120,7 @@
 }
 
 .mejs-overlay-loading {
-	position: absolute;
+/*	position: absolute;
 	top: 50%;
 	left: 50%;
 	width: 80px;
@@ -135,13 +135,44 @@
 	background: -o-linear-gradient(top, rgba(50,50,50,0.9), rgba(0,0,0,0.9));
 	background: -ms-linear-gradient(top, rgba(50,50,50,0.9), rgba(0,0,0,0.9));
 	background: linear-gradient(rgba(50,50,50,0.9), rgba(0,0,0,0.9));
+*/
+    height: 60px;
+    width: 60px;
+    position: absolute;
+    margin: -30px 0 0 -30px;
+    left: 50%;
+    top: 50%;
+    z-index: 99999;
+    -webkit-animation: rotation .6s infinite linear;
+    animation: rotation .6s infinite linear;
+    border-left: 4px solid rgba(0,0,0,.15);
+    border-right: 4px solid rgba(0,0,0,.15);
+    border-bottom: 4px solid rgba(0,0,0,.15);
+    border-top: 4px solid rgba(0,0,0,.75);
+    border-radius: 100%;
+
+}
+
+@-webkit-keyframes rotation {
+	from{-webkit-transform:rotate(0deg)}
+	to{-webkit-transform:rotate(359deg)}
+}
+@keyframes rotation {
+	from {
+		-webkit-transform:rotate(0deg);
+		transform:rotate(0deg)
+	}
+	to {
+		-webkit-transform:rotate(359deg);
+		transform:rotate(359deg)
+	}
 }
 
 .mejs-overlay-loading span {
 	display: block;
 	width: 80px;
 	height: 80px;
-	background: transparent url(loading.gif) 50% 50% no-repeat;
+	/*background: transparent url(loading.gif) 50% 50% no-repeat;*/
 }
 
 /* End: LAYERS */
@@ -153,8 +184,8 @@
 	margin: 0;
 	padding: 0;
 	bottom: 0;
-	left: 10px;
-	right: 10px;
+	left: 0;
+	right: 0;
     background: transparent;
 	height: 36px;
     line-height: 36px;
@@ -167,7 +198,7 @@
     -moz-transition: background-color .3s ease-in-out,background-image .3s ease-in-out;
     -webkit-transition: background-color .3s ease-in-out,background-image .3s ease-in-out;
     transition: background-color .3s ease-in-out,background-image .3s ease-in-out;
-    background-image: url(/static/project/me/bg.png);
+    background-size: 1px 200%;
     background-position: bottom;
 }
 .mejs-container .mejs-controls  .mejs-button {
@@ -182,7 +213,7 @@
 	border: 0;
 }
 
-.mejs-controls .mejs-button button {
+.mejs-controls .mejs-button  button {
 	cursor: pointer;
 	display: block;
 	font-size: 0;
@@ -203,7 +234,7 @@
 
 	/* :focus for accessibility */
 .mejs-controls .mejs-button button:focus {
-	outline: dotted 1px #999;
+	outline: none;
 }
 
 /* End: CONTROL BAR */
@@ -536,15 +567,15 @@
 	-webkit-border-radius: 2px;
 	-moz-border-radius: 2px;
 	border-radius: 2px;
-	background: #fff;
-	background: rgba(255,255,255,0.8);
-	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(255,255,255,0.9)), to(rgba(200,200,200,0.8)));
+	background: #f12b24;
+	/*background: rgba(255,255,255,0.8);*/
+/*	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(255,255,255,0.9)), to(rgba(200,200,200,0.8)));
 	background: -webkit-linear-gradient(top, rgba(255,255,255,0.9), rgba(200,200,200,0.8));
 	background: -moz-linear-gradient(top, rgba(255,255,255,0.9), rgba(200,200,200,0.8));
 	background: -o-linear-gradient(top, rgba(255,255,255,0.9), rgba(200,200,200,0.8));
 	background: -ms-linear-gradient(top, rgba(255,255,255,0.9), rgba(200,200,200,0.8));
 	background: linear-gradient(rgba(255,255,255,0.9), rgba(200,200,200,0.8));
-}
+*/}
 
 .mejs-controls .mejs-horizontal-volume-slider .mejs-horizontal-volume-handle {
 	display: none;
@@ -1009,10 +1040,22 @@ div.mejs-speed-button {
 	float: right!important;
 }
 
+.mejs-bitrate-button button {
+	background: transparent;
+    color: #fff;
+    font-size: 18px;
+    border: none;
+    outline: none;
+}
+
+.mejs-bitrate-button.active button {
+	transform: scale(1.1);
+}
+
 .mejs-bitrate-container {
 	width: 88px;
     right: 12px;
-    bottom: 49px;
+    bottom: 40px;
     z-index: 69;
     color: #bbb;
     will-change: width,height;
@@ -1027,6 +1070,7 @@ div.mejs-speed-button {
     -moz-user-select: none;
     -ms-user-select: none;
     -webkit-user-select: none;
+    display: none;
 }
 
 .mejs-bitrate-container .mejs-bitrate-item {
@@ -1034,12 +1078,35 @@ div.mejs-speed-button {
 	width: 100%;
 	display: block;
 	text-align: center;
-    padding: 7px 10px;
+    padding: 7px 20px 7px 10px;
     height: 28px;
     border-bottom: 1px solid #444;
     line-height: 1.1;
     font-size: 12px;
     box-sizing: border-box;
+    text-align: right;
+}
+
+.mejs-bitrate-container .mejs-bitrate-text {
+	position: relative;
+}
+
+.mejs-bitrate-container .bitrate-active-icon {
+	position: absolute;
+	left: 16px;
+	display: none;
+}
+
+.mejs-bitrate-container .mejs-bitrate-item.active .bitrate-active-icon {
+	display: block;
+}
+
+.mejs-bitrate-container .mejs-bitrate-item sup {
+    color: #f12b24;
+    display: inline-block;
+    position: absolute;
+    top: -2px;
+    right: -20px;
 }
 
 .mejs-bitrate-container .mejs-bitrate-item:last-child {
@@ -1049,4 +1116,37 @@ div.mejs-speed-button {
 .mejs-bitrate-container .mejs-bitrate-item:hover {
 	background-color: #1c1c1c;
 	cursor: pointer;
+}
+
+
+.mejs-gradient-bottom {
+    height: 98px;
+    width: 100%;
+    position: absolute;
+    background-repeat: repeat-x;
+    -webkit-background-size: auto 101%;
+    -moz-transition: opacity .25s cubic-bezier(0.0,0.0,0.2,1);
+    -webkit-transition: opacity .25s cubic-bezier(0.0,0.0,0.2,1);
+    transition: opacity .25s cubic-bezier(0.0,0.0,0.2,1);
+    pointer-events: none;
+    bottom: 0;
+    background-image: url(bg.png);
+    background-position: bottom;
+}
+
+.loading {
+    height: 40px;
+    width: 40px;
+    position: fixed;
+    margin: -20px 0 0 -20px;
+    left: 50%;
+    top: 50%;
+    z-index: 99999;
+    -webkit-animation: rotation .6s infinite linear;
+    animation: rotation .6s infinite linear;
+    border-left: 4px solid rgba(47,60,87,.15);
+    border-right: 4px solid rgba(47,60,87,.15);
+    border-bottom: 4px solid rgba(47,60,87,.15);
+    border-top: 4px solid rgba(47,60,87,.75);
+    border-radius: 100%;
 }
