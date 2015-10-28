@@ -36,6 +36,10 @@
             $('textarea').val(getCookie('resoluton-m3u8'));
         }
 
+        if (location.search) {
+            $('textarea').val(location.search.substring(1));
+        }
+
         $('.btn').click(function () {
             var m = $('textarea').val().trim();
             $('.label').removeClass('label-success').addClass('label-primary');
