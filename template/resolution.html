@@ -13,21 +13,72 @@
             left: 10%;
             right: 10%;
         }
+        small {
+            display: block!important;
+        }
+        small.glyphicon {
+            -webkit-animation: fa-spin 2s infinite linear;
+            animation: fa-spin 2s infinite linear;
+        }
+        @-webkit-keyframes fa-spin {
+          0% {
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+          }
+          100% {
+            -webkit-transform: rotate(359deg);
+            transform: rotate(359deg);
+          }
+        }
+        @keyframes fa-spin {
+          0% {
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+          }
+          100% {
+            -webkit-transform: rotate(359deg);
+            transform: rotate(359deg);
+          }
+        }
+        .big-font {
+            font-size: 20px;
+        }
     </style>
 </head>
 <body>
+    <div class="emoj hide">😊</div>
     <div class="well">
         <div class="form-group">
             <textarea type="text" rows="6" class="form-control" placeholder="请输入原始的m3u8地址"></textarea>
         </div>
-        <div class="alert alert-info">激活的码率包括
-            <i class="label label-primary" data-m="256">256</i>
-            <i class="label label-primary" data-m="580">580</i>
-            <i class="label label-primary" data-m="910">910</i>
-            <i class="label label-primary" data-m="1024">1024</i>
-            <i class="label label-primary" data-m="2048">2048</i>
+        <div class="alert alert-info">
+            <span class="btn btn-primary" data-m="original">
+                原始流
+                <small class="big-font" data-e=😊>😊</small>
+            </span>
+            <hr>
+            <span class="btn btn-primary" data-m="256">
+                256
+                <small class="big-font" data-e=😊>😊</small>
+            </span>
+            <span class="btn btn-primary" data-m="580">
+                580
+                <small class="big-font" data-e=😊>😊</small>
+            </span>
+            <span class="btn btn-primary" data-m="910">
+                910
+                <small class="big-font" data-e=😊>😊</small>
+            </span>
+            <span class="btn btn-primary" data-m="1024">
+                1024
+                <small class="big-font" data-e=😊>😊</small>
+            </span>
+            <span class="btn btn-primary" data-m="2048">
+                2048
+                <small class="big-font" data-e=😊>😊</small>
+            </span>
         </div>
-        <button class="btn btn-primary btn-block">激活</button>
+        <button class="btn btn-primary btn-block active">激活</button>
     </div>
     
     <script src="/static/lib/me/jquery.js"></script>
@@ -40,11 +91,14 @@
             $('textarea').val(location.search.substring(1));
         }
 
-        $('.btn').click(function () {
-            var m = $('textarea').val().trim();
-            $('.label').removeClass('label-success').addClass('label-primary');
+        var arr = ['original', 256, 580, 910, 1024, 2048];
+        var requesting = 0;
 
-            var arr = [256, 580, 910, 1024, 2048];
+        $('.btn').click(function () {
+            requesting = 0;
+            var m = $('textarea').val().trim();
+            $('span[data-m]').removeClass('btn-success btn-danger').addClass('btn-primary');
+            $('small').addClass('big-font').html($('.emoj').text());
 
             if (m) {
                 if (m.indexOf('.m3u8') < 0) {
@@ -53,16 +107,21 @@
                 }
 
                 setCookie('resoluton-m3u8', m);
-                $('button').addClass('disabled');
+                $('.active').attr('disabled', 'disabled');
 
                 for (var i=0, len = arr.length; i < len; i++) {
-                    var temp = m.split('.m3u8');
-                    temp[0]+='_';
-                    temp[0]+=arr[i];
-                    temp[0]+='.m3u8'
-                    var url = temp[0] + temp[1];
-                    console.log(url);    
+                    var url;
 
+                    if (arr[i] !== 'original') {
+                        var temp = m.split('.m3u8');
+                        temp[0]+='_';
+                        temp[0]+=arr[i];
+                        temp[0]+='.m3u8'
+                        url = temp[0] + temp[1];    
+                    } else {
+                        url = m;
+                    }
+                    
                     var qer = arr[i];
                     getM3u8(url, qer);
                 }
@@ -70,12 +129,31 @@
         });
 
         function getM3u8 (url, val) {
-            $.get(url, function () {
-                console.log(val);
-                $('i[data-m=' + val + ']').removeClass('label-primary').addClass('label-success');
-                console.log('success');
+            var requestTime = {};
 
-                $('button').removeClass('disabled');
+            requestTime[val] = new Date().getTime();
+
+            var $span = $('span[data-m=' + val + ']');
+            
+            $span.find('small').addClass('glyphicon');
+
+            $.get(url, function () {
+                $span.removeClass('btn-primary').addClass('btn-success');
+            }).error(function () {
+                $span.removeClass('btn-primary').addClass('btn-danger');
+            }).done(function () {
+                requesting++;
+                requestTime[val] = new Date().getTime() - requestTime[val];
+
+                 $span.find('small').removeClass('big-font glyphicon text-danger').html('耗时：' + requestTime[val] + 'ms');
+
+                 if (requestTime[val] > 1000) {
+                    $span.find('small').addClass('text-danger');
+                 }
+
+                if (requesting === 6) {
+                    $('.active').removeAttr('disabled');
+                }
             });
         }
 

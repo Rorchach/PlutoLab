@@ -9138,13 +9138,18 @@ var Player = (function (_Component) {
 
     // When controls are disabled a click should not toggle playback because
     // the click is considered a control
-    if (this.controls()) {
-      if (this.paused()) {
-        this.play();
-      } else {
-        this.pause();
-      }
-    }
+    
+    /**
+     * 禁用点击切换暂停/播放状态
+     */
+    
+    // if (this.controls()) {
+    //   if (this.paused()) {
+    //     this.play();
+    //   } else {
+    //     this.pause();
+    //   }
+    // }
   };
 
   /**

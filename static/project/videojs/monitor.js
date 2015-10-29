@@ -16,6 +16,14 @@ player.on('resolutionchange', function () {
     console.info('resolutionchange');
 });
 
+player.on('error', function () {
+    player.src({
+        src: player.getCache().src,
+        type: 'application/x-mpegURL'
+    });
+    player.play();
+});
+
 $('.vjs-big-play-button').on('click', function () {
     console.time('视频第一次加载时间');
 });

@@ -9,11 +9,62 @@
   var defaults = {},
       videoJsResolutionSwitcher;
 
+  var cookies = {
+    getItem: function (sKey) {
+      if (!sKey) { return null; }
+      return decodeURIComponent(
+        document.cookie.replace(
+          new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(sKey).replace(
+            /[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")
+        ) || null;
+    },
+    setItem: function (sKey, sValue, vEnd, sPath, sDomain, bSecure) {
+      if (!sKey || /^(?:expires|max\-age|path|domain|secure)$/i.test(sKey)) { return false; }
+      var sExpires = "";
+      if (vEnd) {
+        switch (vEnd.constructor) {
+          case Number:
+            sExpires = vEnd === Infinity ? "; expires=Fri, 31 Dec 9999 23:59:59 GMT" : "; max-age=" + vEnd;
+            break;
+          case String:
+            sExpires = "; expires=" + vEnd;
+            break;
+          case Date:
+            sExpires = "; expires=" + vEnd.toUTCString();
+            break;
+        }
+      }
+      document.cookie =
+        encodeURIComponent(sKey) + "=" + encodeURIComponent(sValue)
+          + sExpires
+          + (sDomain ? "; domain=" + sDomain : "")
+          + (sPath ? "; path=" + sPath : "")
+          + (bSecure ? "; secure" : "");
+      return true;
+    },
+    removeItem: function(sKey, sPath, sDomain) {
+      if (!this.hasItem(sKey)) {
+        return false;
+      }
+      document.cookie = encodeURIComponent(sKey) + "=;" + " expires=Thu, 01 Jan 1970 00:00:00 GMT" + (sDomain ? "; domain=" + sDomain : "") + (sPath ? "; path=" + sPath : "");
+      return true;
+    },
+    hasItem: function (sKey) {
+      if (!sKey) { return false; }
+      return (new RegExp("(?:^|;\\s*)" + encodeURIComponent(sKey).replace(
+        /[\-\.\+\*]/g, "\\$&") + "\\s*\\=")).test(document.cookie);
+    }
+  };
+
   function setSourcesSanitized(player, sources) {
     player.src(sources.map(function(src) {
       return {src: src.src, type: src.type, res: src.res};
     }));
-    player.play();
+    
+    if (player.hasStarted()) {
+      player.play();
+    }
+
     return player;
   }
 
@@ -54,6 +105,7 @@
       // Change player source and wait for loadeddata event, then play video
       // loadedmetadata doesn't work right now for flash.
       // Probably because of https://github.com/videojs/video-js-swf/issues/124
+      var self = this;
       setSourcesSanitized(this.player_, this.src).one('loadeddata', function() {
         this.player_.currentTime(currentTime);
         // if(!isPaused){
@@ -61,6 +113,12 @@
           this.player_.play().handleTechSeeked_();
         // }
         this.player_.trigger('resolutionchange');
+
+        var namespace = this.options_.plugins.videoJsResolutionSwitcher.namespace;
+
+        if (namespace) {
+            cookies.setItem(namespace, self.label.innerHTML);  
+        }
       });
     }
   });
@@ -118,9 +176,17 @@
    * @param options (optional) {object} configuration for the plugin
    */
   videoJsResolutionSwitcher = function(options) {
+    if (options.namespace) {
+        if (cookies.getItem(options.namespace)) {
+            options.default = cookies.getItem(options.namespace);            
+        }
+    }
+
     var settings = videojs.mergeOptions(defaults, options),
         player = this,
         label = document.createElement('span');
+
+    this.settings = settings;
 
     label.classList.add('vjs-resolution-button-label');
 
@@ -194,6 +260,7 @@
      */
     function chooseSrc(groupedSrc, src){
       var selectedRes = settings.default;
+      debugger;
       var selectedLabel = '';
       if (selectedRes === 'high') {
         selectedRes = src[0].res;

@@ -1,4 +1,4 @@
-/*! videojs-contrib-hls - v1.0.1-0 - 2015-10-28
+/*! videojs-contrib-hls - v1.0.1-0 - 2015-10-29
 * Copyright (c) 2015 Brightcove; Licensed  */
 /*! videojs-contrib-media-sources - v2.1.0 - 2015-10-22
 * Copyright (c) 2015 Brightcove; Licensed  */
@@ -3826,7 +3826,7 @@ videojs.Hls = videojs.extend(Component, {
       this.setCurrentTime(this.tech_.currentTime());
     });
     this.on(this.tech_, 'error', function() {
-      console.lig('error stop');
+      console.log('error stop');
       this.stopCheckingBuffer_();
     });
 
@@ -4005,7 +4005,6 @@ videojs.Hls.bufferedAdditions_ = function(original, update) {
     edges.push({ start: update.start(i) });
     edges.push({ end: update.end(i) });
   }
-  console.log('bufferedAdditions_', 'edges', edges.length, edges);
   edges.sort(function(left, right) {
     var leftTime, rightTime;
     leftTime = left.start !== undefined ? left.start : left.end;
@@ -4067,6 +4066,7 @@ videojs.Hls.prototype.setupSourceBuffer_ = function() {
     this.pendingSegment_ = null;
 
     // if we've buffered to the end of the video, let the MediaSource know
+    console.log('updateend');
     currentBuffered = this.findCurrentBuffered_();
     if (currentBuffered.length && this.duration() === currentBuffered.end(0)) {
       this.mediaSource.endOfStream();
@@ -4431,11 +4431,14 @@ videojs.Hls.prototype.findCurrentBuffered_ = function() {
     ranges,
     i;
 
+  var _player = videojs(tech.options_.playerId);
+
   if (buffered && buffered.length) {
     // Search for a range containing the play-head
     for (i = 0; i < buffered.length; i++) {
       currentTime = Math.ceil(currentTime*10)/10;
-      console.log(buffered.start(i), currentTime, buffered.end(i));
+
+console.log(buffered.start(i), buffered.end(i), currentTime);
 
       if (i>0) {
         if (currentTime >= buffered.end(i-1) && currentTime < buffered.start(i) ) {
@@ -4452,7 +4455,7 @@ videojs.Hls.prototype.findCurrentBuffered_ = function() {
         ranges = videojs.createTimeRanges(buffered.start(i), buffered.end(i));
         ranges.indexOf = i;
 
-        this.removeClass('vjs-waiting');
+        player.removeClass('vjs-waiting');
         return ranges;
       }
     }
@@ -4463,11 +4466,11 @@ videojs.Hls.prototype.findCurrentBuffered_ = function() {
    * @author hooke
    */
   
-  var _player = videojs(tech.options_.playerId);
   if (_player.hasStarted()) {
     _player.handleTechWaiting_();  
   }
   
+  console.log('empty ranges', currentTime);
   // Return an empty range if no ranges exist
   ranges = videojs.createTimeRanges();
   ranges.indexOf = -1;
@@ -4524,13 +4527,10 @@ videojs.Hls.prototype.fillBuffer = function(seekToTime) {
   // find the next segment to download
   if (typeof seekToTime === 'number') {
     mediaIndex = this.playlists.getMediaIndexForTime_(seekToTime);
-    console.log('type 1');
   } else if (currentBuffered && currentBuffered.length) {
-    console.log('type 2');
     mediaIndex = this.playlists.getMediaIndexForTime_(currentBuffered.end(0));
     bufferedTime = Math.max(0, currentBuffered.end(0) - currentTime);
   } else {
-    console.log('type 3');
     mediaIndex = this.playlists.getMediaIndexForTime_(this.tech_.currentTime());
   }
 
@@ -4673,15 +4673,11 @@ videojs.Hls.prototype.loadSegment = function(segmentInfo) {
     }
 
     self.setBandwidth(request);
-console.log('############################那扇窗是让我坚强的理由##########################################');
-console.log('after downloaded ts', request);
-console.log('after downloaded ts', segment);
     if (segment.key) {
       segmentInfo.encryptedBytes = new Uint8Array(request.response);
     } else {
       segmentInfo.bytes = new Uint8Array(request.response);
     }
-console.log('after downloaded ts', segmentInfo.bytes);
     self.pendingSegment_ = segmentInfo;
     self.tech_.trigger('progress');
     self.drainBuffer();
@@ -4799,8 +4795,6 @@ videojs.Hls.prototype.drainBuffer = function(event) {
     this.sourceBuffer.appendWindowStart = 0;
   }
   this.pendingSegment_.buffered = this.tech_.buffered();
-  console.log('segmentInfo', segmentInfo.bytes);
-
   // the segment is asynchronously added to the current buffered data
   this.sourceBuffer.appendBuffer(bytes);
 };
@@ -5001,9 +4995,9 @@ resolveUrl = videojs.Hls.resolveUrl = function(basePath, path) {
   videojs.Hls.xhr = function(options, callback) {
     // Add a default timeout for all hls requests
     options = videojs.mergeOptions({
-       timeout: 45e3
+       // timeout: 45e3
+       timeout: 15*1000
      }, options);
-
     var request = videojs.xhr(options, function(error, response) {
       if (!error && request.response) {
         request.responseTime = (new Date()).getTime();
@@ -5967,6 +5961,8 @@ resolveUrl = videojs.Hls.resolveUrl = function(basePath, path) {
             responseText: xhr.responseText,
             code: (xhr.status >= 500) ? 4 : 2
           };
+          playlist.play();
+          console.log('error');
           return loader.trigger('error');
         }
 
@@ -6250,8 +6246,6 @@ resolveUrl = videojs.Hls.resolveUrl = function(basePath, path) {
   // }
 
   PlaylistLoader.prototype.getMediaIndexForTime_ = function(time) {
-    console.log('getMediaIndexForTime_', time);
-
     var i, j, segment, targetDuration;
 
     if (!this.media_) {
@@ -6270,6 +6264,10 @@ resolveUrl = videojs.Hls.resolveUrl = function(basePath, path) {
     i = this.media_.segments.length;
     while (i--) {
       segment = this.media_.segments[i];
+
+      if (!segment) {
+        continue;
+      }
 
       if (i!==0 && segment) {
         // delete segment.start;
@@ -6312,7 +6310,6 @@ resolveUrl = videojs.Hls.resolveUrl = function(basePath, path) {
       time -= segment.duration || targetDuration;
 
       if (time < 0) {
-        console.log('return j;', j);
         return j;
       }
 
@@ -6322,7 +6319,6 @@ resolveUrl = videojs.Hls.resolveUrl = function(basePath, path) {
       // segment which contains `time`. If the guess turns out to be
       // incorrect, we'll have more info to work with next time.
       if (segment.start !== undefined || segment.end !== undefined) {
-        console.log('return Math.floor((j - i) * 0.5);');
         return Math.floor((j - i) * 0.5);
       }
     }
