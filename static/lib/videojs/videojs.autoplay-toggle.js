@@ -171,13 +171,20 @@
 
     var turnOn = !storage.getItem(key);
     console.log('turnOn', turnOn);
+
+    player.me || (player.me = {});
+
     // change player behavior based on toggle
     if (!turnOn) {
       // this could be autoplaying, make sure to stop it and ensure player's autoplay is false
+      player.me.autoplay = false;
+
       player.autoplay(false);
       player.pause();
     } else if (turnOn) {
       // we want this to autoplay
+      
+      player.me.autoplay = true;
         
       setTimeout(function () {
         player.tech_.play();

@@ -1,4 +1,4 @@
-/*! videojs-contrib-hls - v1.0.1-0 - 2015-10-29
+/*! videojs-contrib-hls - v1.0.1-0 - 2015-10-30
 * Copyright (c) 2015 Brightcove; Licensed  */
 /*! videojs-contrib-media-sources - v2.1.0 - 2015-10-22
 * Copyright (c) 2015 Brightcove; Licensed  */
@@ -4066,7 +4066,6 @@ videojs.Hls.prototype.setupSourceBuffer_ = function() {
     this.pendingSegment_ = null;
 
     // if we've buffered to the end of the video, let the MediaSource know
-    console.log('updateend');
     currentBuffered = this.findCurrentBuffered_();
     if (currentBuffered.length && this.duration() === currentBuffered.end(0)) {
       this.mediaSource.endOfStream();
@@ -4438,6 +4437,10 @@ videojs.Hls.prototype.findCurrentBuffered_ = function() {
     for (i = 0; i < buffered.length; i++) {
       currentTime = Math.ceil(currentTime*10)/10;
 
+      if (buffered.length === 1) {
+          buffered
+      }
+
 console.log(buffered.start(i), buffered.end(i), currentTime);
 
       if (i>0) {
@@ -4785,12 +4788,24 @@ videojs.Hls.prototype.drainBuffer = function(event) {
     // If we aren't seeking and are crossing a discontinuity, we should set
     // timestampOffset for new segments to be appended the end of the current
     // buffered time-range
-    this.sourceBuffer.timestampOffset = currentBuffered.end(0);
+    debugger;
+    console.log(segment);
+    // this.sourceBuffer.timestampOffset = currentBuffered.end(0);
+    
+    /**
+     * hooke
+     * 切换分辨率后重新计时
+     */
+    this.setCurrentTime(0);
   }
 
   if (currentBuffered.length) {
     // Chrome 45 stalls if appends overlap the playhead
-    this.sourceBuffer.appendWindowStart = Math.min(this.tech_.currentTime(), currentBuffered.end(0));
+    try {
+      this.sourceBuffer.appendWindowStart = Math.min(this.tech_.currentTime(), currentBuffered.end(0));
+    } catch (e) {
+      this.sourceBuffer.appendWindowStart = 0;  
+    }
   } else {
     this.sourceBuffer.appendWindowStart = 0;
   }
@@ -4996,7 +5011,7 @@ resolveUrl = videojs.Hls.resolveUrl = function(basePath, path) {
     // Add a default timeout for all hls requests
     options = videojs.mergeOptions({
        // timeout: 45e3
-       timeout: 15*1000
+       timeout: 10*1000
      }, options);
     var request = videojs.xhr(options, function(error, response) {
       if (!error && request.response) {

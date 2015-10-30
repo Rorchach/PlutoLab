@@ -62,6 +62,7 @@
     }));
     
     if (player.hasStarted()) {
+      player.hls.setupFirstPlay()
       player.play();
     }
 
@@ -106,10 +107,18 @@
       // loadedmetadata doesn't work right now for flash.
       // Probably because of https://github.com/videojs/video-js-swf/issues/124
       var self = this;
+      this.player_.trigger('resolutionchangebefore');
+
       setSourcesSanitized(this.player_, this.src).one('loadeddata', function() {
-        this.player_.currentTime(currentTime);
+        // this.player_.currentTime(currentTime);
+         /**
+          * hls从0开始播放
+          */
+        this.player_.currentTime(0);
+        this.player_.hls.setCurrentTime(0);
         // if(!isPaused){
           // Start playing and hide loadingSpinner (flash issue ?)
+          // this.player_.hls.setupFirstPlay();
           this.player_.play().handleTechSeeked_();
         // }
         this.player_.trigger('resolutionchange');
@@ -260,7 +269,6 @@
      */
     function chooseSrc(groupedSrc, src){
       var selectedRes = settings.default;
-      debugger;
       var selectedLabel = '';
       if (selectedRes === 'high') {
         selectedRes = src[0].res;

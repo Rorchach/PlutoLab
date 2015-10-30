@@ -3,13 +3,15 @@ function monitor(options) {
 
     // 视频监控
     player.on('waiting', function () {
-        console.time('缓冲');
+        console.time('播放期间缓冲');
     });
 
     player.on('playing', function () {
-        console.log(new Date());
-        console.timeEnd('缓冲');
-        console.timeEnd('视频第一次加载时间');
+        if (player.hasStarted()) {
+            console.timeEnd('播放期间缓冲');
+        }
+        console.timeEnd('用户可感知的视频第一次加载时间');
+        console.timeEnd('切换分辨率到播放的耗时');
     });
 
     player.on('buffering', function () {
@@ -17,7 +19,13 @@ function monitor(options) {
     });
 
     player.on('resolutionchange', function () {
-        console.info('resolutionchange');
+        console.info('成功切换分辨率');
+        
+    });
+
+    player.on('resolutionchangebefore', function () {
+        console.info('切换分辨率');
+        console.time('切换分辨率到播放的耗时');
     });
 
     player.on('error', function (e) {
@@ -28,13 +36,24 @@ function monitor(options) {
         player.play();
     });
 
+    player.on('fullscreenchange', function (e) {
+        console.info('全屏状态切换');
+    });
+
+    player.on('pause', function (e) {
+        console.info('暂停');
+    });
+
     $('.vjs-big-play-button').on('click', function () {
-        console.time('视频第一次加载时间');
+        if (!player.me.autoplay) {
+            console.time('用户可感知的视频第一次加载时间');
+        }
     });
 
     player.on('ready', function () {
-        console.log('ready');
-        console.time('视频第一次加载时间'); 
+        if (player.me.autoplay) {
+            console.time('用户可感知的视频第一次加载时间');
+        }
     });
 };
 
