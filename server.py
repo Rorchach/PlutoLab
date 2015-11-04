@@ -41,7 +41,7 @@ class MediaElementPlayerHandler(tornado.web.RequestHandler):
 class me2Handler(tornado.web.RequestHandler):
     def get(self):
         self.render("me2.html")
-        
+
 class videojsHandler(tornado.web.RequestHandler):
     def get(self):
         self.render("videojs.html")
@@ -68,6 +68,10 @@ class ResolutionHandler(tornado.web.RequestHandler):
     def get(self):
         self.render("resolution.html");
 
+class HlsHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.redirect('http://tieba.pics:9090/example.html');
+
 handlers = [
         (r"/", MainHandler),
         (r"/video", VideoHandler),
@@ -81,6 +85,7 @@ handlers = [
         (r"/me2", me2Handler),
         (r"/videojs", videojsHandler),
         (r"/resolution", ResolutionHandler),
+        (r"/hls", HlsHandler),
     ]
 
 settings = {
@@ -96,7 +101,7 @@ def make_app():
 if __name__ == "__main__":
     app = make_app()
     app.listen(options.port)
-    
+
     print 'Development server is running at http://0.0.0.0:%s/' % options.port
     print 'Quit the server with Control-C'
     tornado.ioloop.IOLoop.current().start()
